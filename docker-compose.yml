@@ -3,7 +3,7 @@ version: '3.1'
 services:
   passport:
     image: ferma666/passport
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "pip install -r requirements.txt && python manage.py runserver 0.0.0.0:8000"
     restart: always
     volumes:
       - "./:/usr/web/CAS"
