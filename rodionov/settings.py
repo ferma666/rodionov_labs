@@ -25,7 +25,7 @@ SECRET_KEY = '+hnke@v4c%=&!0e+k3wss9d=#xq*174k2(t+54#yq&0vd*lv=w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['fa0b5608.ngrok.io', 'localhost']
+ALLOWED_HOSTS = ['fa0b5608.ngrok.io', 'localhost', 'labs.unlogic.ru']
 
 
 # Application definition
