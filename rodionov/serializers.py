@@ -10,6 +10,12 @@ class ProfessionSerializer(serializers.ModelSerializer):
         model = models.Profession
         depth = 1
         fields = "__all__"
+
+
+class CategoryOutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProfessionCategory
+        fields = "__all__"
         # fields = ['id', 'name', 'count', 'first_shift_count', 'category_id',]
     # def create(self, validated_data):
     #     profession_data = {

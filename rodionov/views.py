@@ -7,8 +7,14 @@ from labs import models
 class Professions(APIView):
     def get(self, request):
         professions = models.Profession.objects.all()
-        serializer = serializers.ProfessionSerializer(professions, many=True)
-        return Response(serializer.data)
+        categories = models.ProfessionCategory.objects.all()
+        profession_serializer = serializers.ProfessionSerializer(professions, many=True)
+        category_serializer = serializers.CategoryOutSerializer(categories, many=True)
+        data = {
+            "employees": profession_serializer.data,
+            "categories": category_serializer.data,
+        }
+        return Response(data)
 
     def post(self, request):
         categories = request.data.get('categories')
