@@ -29,21 +29,45 @@ class ProfessionCountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Profession
-        fields = ['id', 'count', 'first_shift_count']
+        fields = ['id', 'count', 'name', 'category', 'first_shift_count']
 
     def save(self):
         validated_data = self.validated_data
-        profession = models.Profession.objects.get(id=validated_data.get('id'))
-        profession.count = validated_data.get('count', profession.count)
-        profession.first_shift_count = validated_data.get('first_shift_count', profession.first_shift_count)
-        profession.save()
+        profession_qs = models.Profession.objects.filter(id=validated_data.get('id'))
+        if profession_qs.exists():
+            profession_qs[0].count = validated_data.get('count', profession_qs[0].count)
+            profession_qs[0].first_shift_count = validated_data.get('first_shift_count',
+                                                                    profession_qs[0].first_shift_count)
+            profession_qs[0].name = validated_data.get('name', profession_qs[0].name)
+            profession_qs[0].category = validated_data.get('category', profession_qs[0].category)
+            profession_qs[0].save()
+            profession = profession_qs[0]
+
+        else:
+            del validated_data['id']
+            profession = models.Profession.objects.create(**validated_data)
+
         return profession
-    # def create(self, validated_data):
-    #     print(validated_data)
-    #
-    #
-    #     return profession
-    #
-    #     pass
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
+    class Meta:
+        model = models.ProfessionCategory
+        fields = ['id', 'name']
+
+    def save(self):
+        validated_data = self.validated_data
+        category_qs = models.ProfessionCategory.objects.filter(id=validated_data.get('id'))
+        if category_qs.exists():
+            category_qs[0].name = validated_data.get('name', category_qs[0].name)
+            category_qs[0].save()
+            category = category_qs[0]
+        else:
+            del validated_data['id']
+            category = models.ProfessionCategory.objects.create(**validated_data)
+
+        return category
 
 

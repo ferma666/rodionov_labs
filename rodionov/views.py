@@ -11,16 +11,19 @@ class Professions(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        for item in request.data:
-            print(item)
-            serializer = serializers.ProfessionCountSerializer(data=item)
+        categories = request.data.get('categories')
+        employees = request.data.get('employess')
+        for category in categories:
+            serializer = serializers.CategorySerializer(data=category)
             if serializer.is_valid(raise_exception=True):
-                profession = serializer.save()
+                serializer.save()
+                
+        for employee in employees:
+            print(employee)
+            serializer = serializers.ProfessionCountSerializer(data=employee)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
 
         professions = models.Profession.objects.all()
         serializer = serializers.ProfessionSerializer(professions, many=True)
         return Response(serializer.data)
-
-    #
-    # def post(self, request):
-    #     if
