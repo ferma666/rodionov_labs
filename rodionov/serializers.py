@@ -49,14 +49,16 @@ class ProfessionCountSerializer(serializers.ModelSerializer):
             category = None
 
         if profession_qs.exists():
-            profession_qs[0].count = validated_data.get('count', profession_qs[0].count)
-            profession_qs[0].first_shift_count = validated_data.get('first_shift_count',
+            profession = profession_qs[0]
+            profession.count = validated_data.get('count', profession_qs[0].count)
+            profession.first_shift_count = validated_data.get('first_shift_count',
                                                                     profession_qs[0].first_shift_count)
-            profession_qs[0].name = validated_data.get('name', profession_qs[0].name)
+            profession.name = validated_data.get('name', profession_qs[0].name)
 
-            profession_qs[0].category = category
+            profession.category = category
 
-            profession_qs[0].save()
+            profession.save()
+            print(60, profession.count)
             profession = profession_qs[0]
 
         else:

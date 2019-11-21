@@ -13,7 +13,7 @@ class ProfessionCategory(models.Model):
 
 
 class Profession(models.Model):
-    name = models.CharField(verbose_name="Наименование профессии", unique=True, max_length=255)
+    name = models.CharField(verbose_name="Наименование профессии", max_length=255)
     count = models.IntegerField(verbose_name="Количество работников данной професии")
     first_shift_count = models.IntegerField(verbose_name="Количество работников в первую смену")
     category = models.ForeignKey(ProfessionCategory, on_delete=models.CASCADE, null=True, blank=True)

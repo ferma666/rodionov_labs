@@ -28,7 +28,6 @@ class Professions(APIView):
                 serializer.save()
                 
         for employee in employees:
-            print(employee)
             serializer = serializers.ProfessionCountSerializer(data=employee)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
