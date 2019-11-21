@@ -34,14 +34,13 @@ class ProfessionCountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Profession
-        fields = ['id', 'count', 'category', 'name', 'first_shift_count']
+        fields = ['count', 'category', 'name', 'first_shift_count']
 
-    id = serializers.IntegerField()
     category = serializers.JSONField(required=False, allow_null=True)
 
     def save(self):
         validated_data = self.validated_data
-        profession_qs = models.Profession.objects.filter(id=validated_data.get('id'))
+        profession_qs = models.Profession.objects.filter(name=validated_data.get('name'))
         category = validated_data.get('category')
 
         if category:
@@ -61,7 +60,6 @@ class ProfessionCountSerializer(serializers.ModelSerializer):
             profession = profession_qs[0]
 
         else:
-            del validated_data['id']
             del validated_data['category']
             validated_data['category'] = category
             profession = models.Profession.objects.create(**validated_data)
@@ -70,11 +68,9 @@ class ProfessionCountSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-
     class Meta:
         model = models.ProfessionCategory
-        fields = ['id', 'name']
+        fields = ['name']
 
     def save(self):
         validated_data = self.validated_data
@@ -84,7 +80,6 @@ class CategorySerializer(serializers.ModelSerializer):
             category_qs[0].save()
             category = category_qs[0]
         else:
-            del validated_data['id']
             category = models.ProfessionCategory.objects.create(**validated_data)
 
         return category
