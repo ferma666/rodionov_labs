@@ -21,7 +21,7 @@ class Professions(APIView):
         employees = request.data.get('employess')
         for category in categories:
             serializer = serializers.CategorySerializer(data=category)
-            if serializer.is_valid(raise_exception=True):
+            if serializer.is_valid(raise_exception=False):
                 serializer.save()
                 
         for employee in employees:
