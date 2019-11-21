@@ -5,6 +5,9 @@ from labs import models
 
 
 class Professions(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         professions = models.Profession.objects.all()
         categories = models.ProfessionCategory.objects.all()
