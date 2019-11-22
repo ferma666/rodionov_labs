@@ -3,6 +3,35 @@ from rest_framework.views import Response
 from . import serializers
 from labs import models
 
+users = [
+    {
+        "first_name": "Арутр",
+        "last_name": "Артуров",
+        "role": "Продавец"
+    },
+    {
+        "first_name": "Идрис",
+        "last_name": "Идрисов",
+        "role": "Руководитель отдела"
+    }
+]
+
+
+class Roles(APIView):
+    parser_classes = ()
+    authentication_classes = ()
+
+    def get(self, request):
+        try:
+            user_id = int(request.GET.get('user_id', 0))
+        except ValueError as error:
+            print(error)
+            user_id = 0
+
+        if len(users) > user_id:
+            return Response(users[user_id])
+        return Response(users[0])
+
 
 class Professions(APIView):
     permission_classes = ()
